@@ -3,39 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌼 HASIB TV 💕</title>
+    <title>🏆 HASIB TV - CLAPPR ULTRA PREMIUM 🚀</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js"></script>
+    
     <style>
         :root {
-            --bg-color: #0d0e15; --container-bg: #161824; --accent-color: #ec4899;
-            --accent-gradient: linear-gradient(135deg, #ec4899, #8b5cf6); --text-color: #f3f4f6;
-            --card-bg: #202336; --card-hover: #2b2f4a;
+            --bg-color: #0b0c10; --container-bg: #1f2833; --accent-color: #66fcf1;
+            --accent-gradient: linear-gradient(135deg, #66fcf1, #45a29e); --text-color: #c5c6c7;
+            --card-bg: #151a21; --card-hover: #252e3b;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
-        header { text-align: center; margin-bottom: 25px; }
-        header h1 { font-size: 2.5rem; font-weight: 700; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .main-container { width: 100%; max-width: 900px; background: var(--container-bg); border-radius: 20px; padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .player-wrapper { width: 100%; border-radius: 14px; overflow: hidden; background-color: #000; aspect-ratio: 16 / 9; margin-bottom: 30px; border: 2px solid rgba(139, 92, 246, 0.3); }
-        video { width: 100%; height: 100%; object-fit: contain; }
-        .search-box { width: 100%; padding: 14px 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background-color: var(--card-bg); color: #fff; font-size: 1.05rem; outline: none; margin-bottom: 25px; }
-        .channels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; max-height: 400px; overflow-y: auto; }
-        .channel-card { background: var(--card-bg); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 120px; }
-        .channel-card.active { background: var(--accent-gradient); }
-        .channel-icon { font-size: 1.5rem; margin-bottom: 12px; }
-        .channel-title { font-weight: 600; font-size: 0.95rem; color: #fff; }
+        body { background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; }
+        header { text-align: center; margin-bottom: 20px; }
+        header h1 { font-size: 2.3rem; font-weight: 700; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .main-container { width: 100%; max-width: 850px; background: var(--container-bg); border-radius: 16px; padding: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
+        
+        .player-wrapper { width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 20px; aspect-ratio: 16 / 9; border: 2px solid #45a29e; background: #000; position: relative; }
+        #player { width: 100%; height: 100%; }
+
+        .search-box { width: 100%; padding: 12px 18px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background-color: var(--card-bg); color: #fff; font-size: 1rem; outline: none; margin-bottom: 20px; }
+        .search-box:focus { border-color: var(--accent-color); }
+        .channels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; max-height: 350px; overflow-y: auto; }
+        .channel-card { background: var(--card-bg); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; min-height: 100px; justify-content: center; border: 1px solid rgba(255,255,255,0.05); }
+        .channel-card:hover { background-color: var(--card-hover); transform: translateY(-2px); }
+        .channel-card.active { border-color: var(--accent-color); background: rgba(102, 252, 241, 0.1); }
+        .channel-icon { font-size: 1.4rem; margin-bottom: 8px; }
+        .channel-title { font-weight: 600; font-size: 0.9rem; color: #fff; }
+        .channels-grid::-webkit-scrollbar { width: 6px; }
+        .channels-grid::-webkit-scrollbar-thumb { background: var(--card-bg); border-radius: 10px; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🌼 HASIB TV 💕</h1>
+        <h1>🏆 HASIB TV PREMIUM 🚀</h1>
     </header>
 
     <div class="main-container">
         <div class="player-wrapper">
-            <video id="videoPlayer" controls autoplay playsinline></video>
+            <div id="player"></div>
         </div>
         <input type="text" id="searchBox" class="search-box" placeholder="আপনার পছন্দের চ্যানেল খুঁজুন...">
         <div class="channels-grid" id="channelsGrid"></div>
@@ -55,16 +63,15 @@
             { name: "Btv 2", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", emoji: "📡" }
         ];
 
-        const video = document.getElementById('videoPlayer');
-        let hls = null;
+        let clapprPlayer = null;
 
-        // গ্লোবাল হাই-স্পিড ক্রস-অরিজিন বাইপাসার
-        function bypassCORS(url) {
+        // গ্লোবাল ডিরেক্ট ক্লায়েন্ট-সাইড প্রক্সি (যা হোস্টিং সার্ভার ব্যবহার করে না)
+        function getSecureUrl(url) {
             if (url.startsWith('https://') && !url.includes('badinan') && !url.includes('ami.bd')) {
-                return url;
+                return url; 
             }
-            // এটি ব্রাউজারের সিকিউরিটি হেডারগুলোকে রানটাইমে ফাঁকি দেয়
-            return "https://corsproxy.io/?" + encodeURIComponent(url);
+            // এটি সরাসরি ইউজারের ব্রাউজার থেকে CORS প্রোটোকল ভেঙে ডাটা নিয়ে আসে
+            return "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
         }
 
         function renderChannels(channelsToRender, activeUrl) {
@@ -85,23 +92,35 @@
         }
 
         function playStream(url) {
-            if (hls) hls.destroy();
-            const secureUrl = bypassCORS(url);
+            const finalUrl = getSecureUrl(url);
 
-            if (Hls.isSupported()) {
-                hls = new Hls({ maxBufferLength: 10, enableWorker: true });
-                hls.loadSource(secureUrl);
-                hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, () => video.play().catch(() => {}));
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = secureUrl;
+            if (clapprPlayer) {
+                clapprPlayer.load(finalUrl);
+                clapprPlayer.play();
+            } else {
+                clapprPlayer = new Clappr.Player({
+                    source: finalUrl,
+                    parentId: "#player",
+                    baseUrl: "https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist",
+                    autoPlay: true,
+                    mute: false,
+                    width: "100%",
+                    height: "100%",
+                    mediacontrol: { seekbar: "#66fcf1", buttons: "#66fcf1" }
+                });
             }
         }
 
-        if(channels.length > 0) {
+        document.getElementById('searchBox').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = channels.filter(c => c.name.toLowerCase().includes(query));
+            renderChannels(filtered, clapprPlayer ? clapprPlayer.options.source : '');
+        });
+
+        window.onload = function() {
             playStream(channels[0].url);
             renderChannels(channels, channels[0].url);
-        }
+        };
     </script>
 </body>
 </html>
