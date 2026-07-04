@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏆 HASIB TV - CLAPPR ULTRA PREMIUM 🚀</title>
+    <title>🏆 HASIB TV - CLAPPR FINAL 🚀</title>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js"></script>
@@ -19,20 +19,15 @@
         header { text-align: center; margin-bottom: 20px; }
         header h1 { font-size: 2.3rem; font-weight: 700; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .main-container { width: 100%; max-width: 850px; background: var(--container-bg); border-radius: 16px; padding: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-        
         .player-wrapper { width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 20px; aspect-ratio: 16 / 9; border: 2px solid #45a29e; background: #000; position: relative; }
         #player { width: 100%; height: 100%; }
-
         .search-box { width: 100%; padding: 12px 18px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background-color: var(--card-bg); color: #fff; font-size: 1rem; outline: none; margin-bottom: 20px; }
-        .search-box:focus { border-color: var(--accent-color); }
         .channels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; max-height: 350px; overflow-y: auto; }
         .channel-card { background: var(--card-bg); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; min-height: 100px; justify-content: center; border: 1px solid rgba(255,255,255,0.05); }
         .channel-card:hover { background-color: var(--card-hover); transform: translateY(-2px); }
         .channel-card.active { border-color: var(--accent-color); background: rgba(102, 252, 241, 0.1); }
         .channel-icon { font-size: 1.4rem; margin-bottom: 8px; }
         .channel-title { font-weight: 600; font-size: 0.9rem; color: #fff; }
-        .channels-grid::-webkit-scrollbar { width: 6px; }
-        .channels-grid::-webkit-scrollbar-thumb { background: var(--card-bg); border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -42,6 +37,10 @@
     </header>
 
     <div class="main-container">
+        <div id="noticeBoard" style="background: #ff4a4a; color: white; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-weight: 600; text-align: center; font-size: 0.9rem; display: none;">
+            ⚠️ কিছু চ্যানেল ব্ল্যাক স্ক্রিন দেখালে প্লেয়ারের পাশে আসা 'Shield' আইকন থেকে 'Allow Insecure Content' অন করুন অথবা 'CORS Unblocker' এক্সটেনশন ব্যবহার করুন।
+        </div>
+
         <div class="player-wrapper">
             <div id="player"></div>
         </div>
@@ -65,15 +64,6 @@
 
         let clapprPlayer = null;
 
-        // গ্লোবাল ডিরেক্ট ক্লায়েন্ট-সাইড প্রক্সি (যা হোস্টিং সার্ভার ব্যবহার করে না)
-        function getSecureUrl(url) {
-            if (url.startsWith('https://') && !url.includes('badinan') && !url.includes('ami.bd')) {
-                return url; 
-            }
-            // এটি সরাসরি ইউজারের ব্রাউজার থেকে CORS প্রোটোকল ভেঙে ডাটা নিয়ে আসে
-            return "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
-        }
-
         function renderChannels(channelsToRender, activeUrl) {
             const grid = document.getElementById('channelsGrid');
             grid.innerHTML = '';
@@ -92,21 +82,26 @@
         }
 
         function playStream(url) {
-            const finalUrl = getSecureUrl(url);
+            // কোনো বাইরের সার্ভার প্রক্সি ছাড়া একদম ডিরেক্ট লিংক পাস করানো হচ্ছে
+            // কারণ প্রক্সি ব্যবহার করলে লোকাল বিডিআইএক্স আইপি ডেড হয়ে যায়
+            if (url.startsWith('http://')) {
+                document.getElementById('noticeBoard').style.display = 'block';
+            } else {
+                document.getElementById('noticeBoard').style.display = 'none';
+            }
 
             if (clapprPlayer) {
-                clapprPlayer.load(finalUrl);
+                clapprPlayer.load(url);
                 clapprPlayer.play();
             } else {
                 clapprPlayer = new Clappr.Player({
-                    source: finalUrl,
+                    source: url,
                     parentId: "#player",
                     baseUrl: "https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist",
                     autoPlay: true,
                     mute: false,
                     width: "100%",
-                    height: "100%",
-                    mediacontrol: { seekbar: "#66fcf1", buttons: "#66fcf1" }
+                    height: "100%"
                 });
             }
         }
