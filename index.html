@@ -3,119 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🏆 HASIB TV - CLAPPR FINAL 🚀</title>
+    <title>পাংকু টিভি - লাইভ আইপিটিভি</title>
+    <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js"></script>
-    
     <style>
-        :root {
-            --bg-color: #0b0c10; --container-bg: #1f2833; --accent-color: #66fcf1;
-            --accent-gradient: linear-gradient(135deg, #66fcf1, #45a29e); --text-color: #c5c6c7;
-            --card-bg: #151a21; --card-hover: #252e3b;
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; }
-        header { text-align: center; margin-bottom: 20px; }
-        header h1 { font-size: 2.3rem; font-weight: 700; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .main-container { width: 100%; max-width: 850px; background: var(--container-bg); border-radius: 16px; padding: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); }
-        .player-wrapper { width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 20px; aspect-ratio: 16 / 9; border: 2px solid #45a29e; background: #000; position: relative; }
-        #player { width: 100%; height: 100%; }
-        .search-box { width: 100%; padding: 12px 18px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background-color: var(--card-bg); color: #fff; font-size: 1rem; outline: none; margin-bottom: 20px; }
-        .channels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; max-height: 350px; overflow-y: auto; }
-        .channel-card { background: var(--card-bg); border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; min-height: 100px; justify-content: center; border: 1px solid rgba(255,255,255,0.05); }
-        .channel-card:hover { background-color: var(--card-hover); transform: translateY(-2px); }
-        .channel-card.active { border-color: var(--accent-color); background: rgba(102, 252, 241, 0.1); }
-        .channel-icon { font-size: 1.4rem; margin-bottom: 8px; }
-        .channel-title { font-weight: 600; font-size: 0.9rem; color: #fff; }
+        /* Custom Scrollbar for Channel List */
+        .channel-box::-webkit-scrollbar {
+            width: 8px;
+        }
+        .channel-box::-webkit-scrollbar-track {
+            background: #1e293b;
+            border-radius: 8px;
+        }
+        .channel-box::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 8px;
+        }
+        .channel-box::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        /* Big Video Player Wrapper */
+        .video-container {
+            position: relative;
+            padding-top: 50.25%; /* Large Aspect Ratio */
+        }
+        .video-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+        }
     </style>
 </head>
-<body>
+<body class="flex flex-col min-h-screen">
 
-    <header>
-        <h1>🏆 HASIB TV PREMIUM 🚀</h1>
+    <header class="bg-slate-900 border-b border-slate-800 py-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-emerald-400 tracking-wider">
+                💥 HASIB টিভি <span class="text-white">Pro</span>
+            </h1>
+            <span class="bg-red-600 text-xs font-semibold px-2.5 py-1 rounded-full animate-pulse flex items-center gap-1">
+                <span class="w-2 h-2 bg-white rounded-full"></span> লাইভ
+            </span>
+        </div>
     </header>
 
-    <div class="main-container">
-        <div id="noticeBoard" style="background: #ff4a4a; color: white; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-weight: 600; text-align: center; font-size: 0.9rem; display: none;">
-            ⚠️ কিছু চ্যানেল ব্ল্যাক স্ক্রিন দেখালে প্লেয়ারের পাশে আসা 'Shield' আইকন থেকে 'Allow Insecure Content' অন করুন অথবা 'CORS Unblocker' এক্সটেনশন ব্যবহার করুন।
+    <main class="flex-grow container mx-auto px-4 py-6 max-w-5xl">
+        
+        <div class="bg-black rounded-xl overflow-hidden shadow-2xl border border-slate-800 mb-4">
+            <div class="video-container">
+                <video id="panku-player" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" data-setup='{}'>
+                    <p class="vjs-no-js">
+                        ভিডিও দেখতে আপনার ব্রাউজারে জাভাস্ক্রিপ্ট সচল করুন।
+                    </p>
+                </video>
+            </div>
+            <div class="p-4 bg-slate-900 flex justify-between items-center border-b border-slate-800">
+                <h2 id="current-channel-title" class="text-xl font-semibold text-slate-200">চ্যানেল লোড হচ্ছে...</h2>
+                <span id="channel-count" class="text-sm text-slate-400 bg-slate-800 px-3 py-1 rounded-md">০টি চ্যানেল</span>
+            </div>
+            
+            <div class="bg-slate-950 px-4 py-2 flex justify-between items-center text-xs sm:text-sm text-slate-400">
+                <div class="flex items-center gap-1.5 text-amber-400 font-medium">
+                    <span class="flex h-2 w-2 relative">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                    </span>
+                    এখন দেখছেন: <span id="live-viewers" class="font-bold text-white">১</span> জন
+                </div>
+                <div class="text-slate-400">
+                    মোট ভিজিটর: <span id="total-visits" class="font-bold text-emerald-400">Loading...</span> জন
+                </div>
+            </div>
         </div>
 
-        <div class="player-wrapper">
-            <div id="player"></div>
+        <div class="mb-3 flex items-center justify-between">
+            <h3 class="text-lg font-semibold text-emerald-400">📺 চ্যানেলসমূহ</h3>
+            <input type="text" id="search-box" placeholder="চ্যানেল খুঁজুন..." class="bg-slate-800 border border-slate-700 text-sm rounded-lg px-3 py-1.5 text-slate-200 focus:outline-none focus:border-emerald-500 w-48 transition-all">
         </div>
-        <input type="text" id="searchBox" class="search-box" placeholder="আপনার পছন্দের চ্যানেল খুঁজুন...">
-        <div class="channels-grid" id="channelsGrid"></div>
-    </div>
+
+        <div id="channel-list" class="channel-box grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 max-h-[350px] overflow-y-auto p-2 bg-slate-900/50 rounded-xl border border-slate-800">
+            <div class="col-span-full text-center py-8 text-slate-400 animate-pulse">মাস্টার প্লেলিস্ট প্রসেস করা হচ্ছে, দয়া করে অপেক্ষা করুন...</div>
+        </div>
+
+    </main>
+
+    <footer class="bg-slate-950 border-t border-slate-900 py-4 text-center text-sm text-slate-500">
+        <p>&copy; 2026 HASIB tv। সর্বস্বত্ব সংরক্ষিত।</p>
+    </footer>
+
+    <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
 
     <script>
-        const channels = [
-            { name: "Caze tv", url: "https://dfr80qz435crc.cloudfront.net/MNOP/Amagi/Caze/Caze_TV_BR/Caze_TV.m3u8", emoji: "🏆" },
-            { name: "Somoy Tv", url: "https://live.thebosstv.com:30443/dwlive/Somoy-TV/chunks.m3u8", emoji: "📰" },
-            { name: "B tv", url: "http://198.195.239.50:8095/btv/tracks-v1a1/mono.m3u8", emoji: "📺" },
-            { name: "Khela play", url: "https://next.badinan.xyz/nexttv/FHD/playlist.m3u8", emoji: "⚽" },
-            { name: "Toffee", url: "https://kazimmt.ami.bd/playlist/TF/TF-1.m3u8", emoji: "🔥" },
-            { name: "T sports", url: "http://198.195.239.50:8095/tsports/tracks-v1a1/mono.m3u8", emoji: "🏏" },
-            { name: "P tv", url: "http://198.195.239.50:8095/ptv/tracks-v1a1/mono.m3u8", emoji: "🎯" },
-            { name: "Sun Direct", url: "http://198.195.239.50:8095/unt-s/video.m3u8", emoji: "☀️" },
-            { name: "Willow", url: "http://27.124.71.27/Willow_Extra/index.m3u8", emoji: "🏏" },
-            { name: "Btv 2", url: "https://owrcovcrpy.gpcdn.net/bpk-tv/1709/output/index.m3u8", emoji: "📡" }
-        ];
+        const m3uUrl = 'https://raw.githubusercontent.com/Jonypk789/Hasib-Tv/refs/heads/main/playlist.m3u8';
+        let allChannels = [];
+        const player = videojs('panku-player');
 
-        let clapprPlayer = null;
-
-        function renderChannels(channelsToRender, activeUrl) {
-            const grid = document.getElementById('channelsGrid');
-            grid.innerHTML = '';
-            channelsToRender.forEach((channel) => {
-                const card = document.createElement('div');
-                card.className = 'channel-card';
-                if(activeUrl === channel.url) card.classList.add('active');
-                card.innerHTML = `<div class="channel-icon">${channel.emoji}</div><div class="channel-title">${channel.name}</div>`;
-                card.addEventListener('click', () => {
-                    document.querySelectorAll('.channel-card').forEach(c => c.classList.remove('active'));
-                    card.classList.add('active');
-                    playStream(channel.url);
+        // --- Visitor Counter Logic ---
+        function updateCounters() {
+            // 1. Total Visits Counter using a free public API
+            // 'pankutv_2026' এটি আপনার সাইটের ইউনিক আইডি হিসেবে সেট করা হয়েছে
+            fetch('https://api.countapi.xyz/hit/pankutv_2026/visits')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('total-visits').innerText = data.value;
+                })
+                .catch(() => {
+                    // API কোনো কারণে ডাউন থাকলে লোকাল স্টোরেজ ব্যাকআপ হিসেবে কাজ করবে
+                    let localVisits = localStorage.getItem('panku_visits') || 0;
+                    localVisits = parseInt(localVisits) + 1;
+                    localStorage.setItem('panku_visits', localVisits);
+                    document.getElementById('total-visits').innerText = localVisits + 120; // একটু প্রো-লুক দেওয়ার জন্য বেস ভ্যালু যোগ করা
                 });
-                grid.appendChild(card);
+
+            // 2. Real-time Simulated Live Viewers (বাস্তবসম্মত ওঠানামা করবে)
+            function updateLiveViewers() {
+                // এখানে ১২ থেকে ৩৫ জনের মধ্যে একটি র‍্যান্ডম সংখ্যা জেনারেট হবে
+                const baseViewers = Math.floor(Math.random() * (35 - 12 + 1)) + 12;
+                document.getElementById('live-viewers').innerText = baseViewers;
+            }
+            updateLiveViewers();
+            setInterval(updateLiveViewers, 5000); // প্রতি ৫ সেকেন্ড পর পর লাইভ ভিউয়ারের সংখ্যা নিজে নিজেই সামান্য চেঞ্জ হবে
+        }
+
+        // Fetch and Parse M3U Playlist
+        async function loadPlaylist() {
+            try {
+                const response = await fetch(m3uUrl);
+                const data = await response.text();
+                allChannels = parseM3U(data);
+                
+                document.getElementById('channel-count').innerText = `${allChannels.length}টি চ্যানেল`;
+                
+                renderChannels(allChannels);
+
+                if(allChannels.length > 0) {
+                    playChannel(allChannels[0].url, allChannels[0].name);
+                }
+            } catch (error) {
+                console.error("Error loading playlist:", error);
+                document.getElementById('channel-list').innerHTML = `<div class="col-span-full text-center py-8 text-red-400">চ্যানেল লিস্ট লোড করতে সমস্যা হয়েছে! আবার চেষ্টা করুন।</div>`;
+            }
+        }
+
+        // Simple M3U Parser
+        function parseM3U(data) {
+            const lines = data.split('\n');
+            const channels = [];
+            let currentChannel = {};
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (line.startsWith('#EXTINF:')) {
+                    const nameMatch = line.match(/,(.+)$/);
+                    currentChannel.name = nameMatch ? nameMatch[1].trim() : "Unknown Channel";
+                    
+                    const logoMatch = line.match(/tvg-logo="([^"]+)"/);
+                    currentChannel.logo = logoMatch ? logoMatch[1] : '';
+                } else if (line.startsWith('http')) {
+                    currentChannel.url = line;
+                    channels.push(currentChannel);
+                    currentChannel = {};
+                }
+            }
+            return channels;
+        }
+
+        // Render Channels to Grid
+        function renderChannels(channels) {
+            const container = document.getElementById('channel-list');
+            container.innerHTML = '';
+
+            if(channels.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-8 text-slate-500">কোনো চ্যানেল পাওয়া যায়নি!</div>`;
+                return;
+            }
+
+            channels.forEach((channel) => {
+                const card = document.createElement('div');
+                card.className = 'bg-slate-800/80 hover:bg-emerald-600/20 border border-slate-700/50 hover:border-emerald-500 p-3 rounded-lg cursor-pointer flex items-center gap-3 transition-all duration-200 transform hover:-translate-y-0.5 active:scale-95';
+                
+                const logoHtml = channel.logo ? 
+                    `<img src="${channel.logo}" class="w-10 h-10 object-contain rounded bg-slate-900 p-1" onerror="this.src='https://placehold.co/40x40/1e293b/fff?text=TV'">` :
+                    `<div class="w-10 h-10 rounded bg-slate-700 flex items-center justify-center font-bold text-emerald-400 text-sm">TV</div>`;
+
+                card.innerHTML = `
+                    ${logoHtml}
+                    <span class="text-sm font-medium text-slate-200 truncate">${channel.name}</span>
+                `;
+
+                card.onclick = () => playChannel(channel.url, channel.name);
+                container.appendChild(card);
             });
         }
 
-        function playStream(url) {
-            // কোনো বাইরের সার্ভার প্রক্সি ছাড়া একদম ডিরেক্ট লিংক পাস করানো হচ্ছে
-            // কারণ প্রক্সি ব্যবহার করলে লোকাল বিডিআইএক্স আইপি ডেড হয়ে যায়
-            if (url.startsWith('http://')) {
-                document.getElementById('noticeBoard').style.display = 'block';
-            } else {
-                document.getElementById('noticeBoard').style.display = 'none';
-            }
-
-            if (clapprPlayer) {
-                clapprPlayer.load(url);
-                clapprPlayer.play();
-            } else {
-                clapprPlayer = new Clappr.Player({
-                    source: url,
-                    parentId: "#player",
-                    baseUrl: "https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist",
-                    autoPlay: true,
-                    mute: false,
-                    width: "100%",
-                    height: "100%"
+        // Play Selected Channel
+        function playChannel(url, name) {
+            document.getElementById('current-channel-title').innerText = name;
+            
+            player.src({
+                src: url,
+                type: 'application/x-mpegURL'
+            });
+            
+            player.ready(function() {
+                player.play().catch(function(error) {
+                    console.log("Auto-play dynamically blocked: ", error);
                 });
-            }
+            });
         }
 
-        document.getElementById('searchBox').addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            const filtered = channels.filter(c => c.name.toLowerCase().includes(query));
-            renderChannels(filtered, clapprPlayer ? clapprPlayer.options.source : '');
+        // Search Filter
+        document.getElementById('search-box').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const filtered = allChannels.filter(channel => 
+                channel.name.toLowerCase().includes(searchTerm)
+            );
+            renderChannels(filtered);
         });
 
-        window.onload = function() {
-            playStream(channels[0].url);
-            renderChannels(channels, channels[0].url);
-        };
+        // Initialize Everything
+        loadPlaylist();
+        updateCounters();
     </script>
 </body>
-</html>
+    </html>
